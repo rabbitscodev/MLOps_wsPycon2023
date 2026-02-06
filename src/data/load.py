@@ -36,7 +36,7 @@ def load(train_size=.8):
 def load_and_log():
     # 🚀 start a run, with a type to label it and a project it can call home
     with wandb.init(
-        project="MLOps-Pycon2023",
+        project="MLOps-Pycon2026",
         name=f"Load Raw Data ExecId-{args.IdExecution}", job_type="load-data") as run:
         
         datasets = load()  # separate code for loading the datasets
@@ -47,7 +47,9 @@ def load_and_log():
             "mnist-raw", type="dataset",
             description="raw MNIST dataset, split into train/val/test",
             metadata={"source": "torchvision.datasets.MNIST",
-                      "sizes": [len(dataset) for dataset in datasets]})
+                      "sizes": [len(dataset) for dataset in datasets],
+                      "names": [name for name in names]
+                     })
 
         for name, data in zip(names, datasets):
             # 🐣 Store a new file in the artifact, and write something into its contents.
